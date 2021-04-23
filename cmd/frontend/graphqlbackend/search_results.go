@@ -595,8 +595,6 @@ func (r *searchResolver) evaluateAndStream(ctx context.Context, q query.Basic) (
 // results, and is not exhaustive for every expression, we rerun the search by
 // doubling count again.
 func (r *searchResolver) evaluateAnd(ctx context.Context, q query.Basic) (*SearchResultsResolver, error) {
-	start := time.Now()
-
 	// Invariant: this function is only reachable from callers that
 	// guarantee a root node with one or more operands.
 	operands := q.Pattern.(query.Operator).Operands
@@ -652,15 +650,6 @@ func (r *searchResolver) evaluateAnd(ctx context.Context, q query.Basic) (*Searc
 		}
 		exhausted = !result.IsLimitHit
 		for _, term := range operands[1:] {
-			// check if we exceed the overall time limit before running the next query.
-			select {
-			case <-ctx.Done():
-				usedTime := time.Since(start)
-				suggestTime := longer(2, usedTime)
-				return alertForTimeout(usedTime, suggestTime, r).wrap(r.db), nil
-			default:
-			}
-
 			termResult, err = r.evaluatePatternExpression(ctx, q.MapPattern(term))
 			if err != nil {
 				return nil, err
