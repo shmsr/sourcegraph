@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"sync"
+	"time"
 
 	otlog "github.com/opentracing/opentracing-go/log"
 	"github.com/pkg/errors"
@@ -70,6 +71,8 @@ func NewSearchImplementer(ctx context.Context, db dbutil.DB, args *SearchArgs) (
 		tr.SetError(err)
 		tr.Finish()
 	}()
+
+	start := time.Now()
 
 	settings := args.Settings
 	if settings == nil {
@@ -137,6 +140,7 @@ func NewSearchImplementer(ctx context.Context, db dbutil.DB, args *SearchArgs) (
 			Pagination:     pagination,
 			PatternType:    searchType,
 			DefaultLimit:   defaultLimit,
+			Start:          start,
 		},
 
 		stream: args.Stream,
@@ -243,6 +247,9 @@ type SearchInputs struct {
 
 	// DefaultLimit is the default limit to use if not specified in query.
 	DefaultLimit int
+
+	// Start is the time the search started
+	Start time.Time
 }
 
 // searchResolver is a resolver for the GraphQL type `Search`
