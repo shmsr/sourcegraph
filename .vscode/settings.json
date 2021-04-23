@@ -68,6 +68,14 @@
       "directory": "shared",
       "changeProcessCWD": true,
     },
+    {
+      "directory": "branded",
+      "changeProcessCWD": true,
+    },
+    {
+      "directory": "wildcard",
+      "changeProcessCWD": true,
+    },
   ],
   "go.lintTool": "golangci-lint",
   "shellformat.flag": "-i 2 -ci",
