@@ -288,7 +288,8 @@ async function completeFilter(
             })
         )
     }
-    let dynamicSuggestions: Monaco.languages.CompletionItem[] = []
+    const dynamicSuggestions: Monaco.languages.CompletionItem[] = []
+    /*
     if (resolvedFilter.definition.suggestions) {
         // If the filter definition has an associated dynamic suggestion type,
         // use it to retrieve dynamic suggestions from the backend.
@@ -308,6 +309,7 @@ async function completeFilter(
                 command: COMPLETION_ITEM_SELECTED,
             }))
     }
+    */
     return { suggestions: staticSuggestions.concat(dynamicSuggestions) }
 }
 

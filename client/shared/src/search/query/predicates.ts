@@ -125,6 +125,21 @@ export const predicateCompletion = (field: string): Completion[] => {
     if (field === 'repo') {
         return [
             {
+                label: 'search GitHub org',
+                insertText: 'github\\.com/(${1:ENTER ORG})/.*',
+                asSnippet: true,
+            },
+            {
+                label: 'search for GitHub repo name',
+                insertText: 'github\\.com/.*/${1:ENTER REPO NAME}',
+                asSnippet: true,
+            },
+            {
+                label: 'search in exact GitHub repo',
+                insertText: '^github\\.com/(${1:ENTER ORG})/(${2:ENTER REPO NAME})$',
+                asSnippet: true,
+            },
+            {
                 label: 'contains.file(...)',
                 insertText: 'contains.file(${1:CHANGELOG})',
                 asSnippet: true,
