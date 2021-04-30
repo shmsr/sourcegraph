@@ -81,7 +81,10 @@ func TestClient_GetRepository(t *testing.T) {
 	"full_name": "o/r",
 	"description": "d",
 	"html_url": "https://github.example.com/o/r",
-	"fork": true
+	"fork": true,
+	"stargazers_count": 30,
+	"watchers_count": 20,
+	"forks_count": 5
 }
 `,
 	}
@@ -93,6 +96,9 @@ func TestClient_GetRepository(t *testing.T) {
 		Description:   "d",
 		URL:           "https://github.example.com/o/r",
 		IsFork:        true,
+		Stars:         30,
+		Watchers:      20,
+		Forks:         5,
 	}
 
 	repo, err := c.GetRepository(context.Background(), "owner", "repo")

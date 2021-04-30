@@ -40,6 +40,11 @@ type Repository struct {
 	// This field will always be blank on repos stored in our database because the value will be different
 	// depending on which token was used to fetch it
 	ViewerPermission string // ADMIN, WRITE, READ, or empty if unknown. Only the graphql api populates this. https://developer.github.com/v4/enum/repositorypermission/
+
+	// Metadata retained for ranking
+	Stars    int
+	Watchers int
+	Forks    int
 }
 
 func ownerNameCacheKey(owner, name string) string       { return "0:" + owner + "/" + name }
@@ -171,6 +176,9 @@ type restRepository struct {
 	Locked      bool                      `json:"locked"`
 	Disabled    bool                      `json:"disabled"`
 	Permissions restRepositoryPermissions `json:"permissions"`
+	Stars       int                       `json:"stargazers_count"`
+	Watchers    int                       `json:"watchers_count"`
+	Forks       int                       `json:"forks_count"`
 }
 
 // getRepositoryFromAPI attempts to fetch a repository from the GitHub API without use of the redis cache.
@@ -204,6 +212,9 @@ func convertRestRepo(restRepo restRepository) *Repository {
 		IsLocked:         restRepo.Locked,
 		IsDisabled:       restRepo.Disabled,
 		ViewerPermission: convertRestRepoPermissions(restRepo.Permissions),
+		Stars:            restRepo.Stars,
+		Watchers:         restRepo.Watchers,
+		Forks:            restRepo.Forks,
 	}
 }
 
