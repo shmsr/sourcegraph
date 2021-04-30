@@ -1,5 +1,18 @@
 .docker-command-spec {
+    display: flex;
+    flex-direction: column;
+
+    & > tr {
+        border-top: 1px solid var(--border-color);
+        overflow: auto;
+    }
+
+    & td {
+        border-top: none !important;
+    }
+
     &__header {
         width: 5rem;
+        border-top: none !important;
     }
 }
