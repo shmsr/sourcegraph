@@ -51,6 +51,16 @@ var (
 		Exec:       testExec,
 		UsageFunc:  testUsage,
 	}
+
+	doctorFlagSet = flag.NewFlagSet("sg doctor", flag.ExitOnError)
+	doctorCommand = &ffcli.Command{
+		Name:       "doctor",
+		ShortUsage: "sg doctor",
+		ShortHelp:  "Run the checks defined in the config file to make sure your system is healthy.",
+		FlagSet:    doctorFlagSet,
+		Exec:       doctorExec,
+		UsageFunc:  doctorUsage,
+	}
 )
 
 var (
@@ -62,7 +72,7 @@ var (
 	rootCommand = &ffcli.Command{
 		ShortUsage:  "sg [flags] <subcommand>",
 		FlagSet:     rootFlagSet,
-		Subcommands: []*ffcli.Command{runCommand, runSetCommand, startCommand, testCommand},
+		Subcommands: []*ffcli.Command{runCommand, runSetCommand, startCommand, testCommand, doctorCommand},
 	}
 )
 
@@ -172,6 +182,11 @@ func runExec(ctx context.Context, args []string) error {
 	return run(ctx, cmd)
 }
 
+func doctorExec(ctx context.Context, args []string) error {
+	out.WriteLine(output.Linef("", output.StyleWarning, "ERROR: is someone here a doctor?"))
+	return flag.ErrHelp
+}
+
 func runUsage(c *ffcli.Command) string {
 	var out strings.Builder
 
@@ -222,6 +237,15 @@ func startUsage(c *ffcli.Command) string {
 
 	fmt.Fprintf(&out, "USAGE\n")
 	fmt.Fprintln(&out, "  sg start")
+
+	return out.String()
+}
+
+func doctorUsage(c *ffcli.Command) string {
+	var out strings.Builder
+
+	fmt.Fprintf(&out, "USAGE\n")
+	fmt.Fprintf(&out, "  sg doctor\n")
 
 	return out.String()
 }

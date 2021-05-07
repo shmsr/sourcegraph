@@ -45,11 +45,17 @@ type Command struct {
 	IgnoreStderr     bool              `yaml:"ignoreStderr"`
 }
 
+type Check struct {
+	Cmd         string `yaml:"cmd"`
+	FailMessage string `yaml:"failMessage"`
+}
+
 type Config struct {
 	Env         map[string]string   `yaml:"env"`
 	Commands    map[string]Command  `yaml:"commands"`
 	Commandsets map[string][]string `yaml:"commandsets"`
 	Tests       map[string]Command  `yaml:"tests"`
+	Checks      map[string]Check    `yaml:"checks"`
 }
 
 // Merges merges the top-level entries of two Config objects, with the receiver
