@@ -191,6 +191,7 @@ export class ConnectionNodes<C extends Connection<N>, N, NP = {}, HP = {}> exten
                         {FootComponent && <FootComponent nodes={this.props.connection.nodes} />}
                     </ListComponent>
                 )}
+                {/* TODO: test noSummaryIfAllNodesVisible */}
                 {!this.props.connectionQuery && !this.props.loading && hasNextPage && (
                     <ConnectionNodesSummary
                         summary={summary}
