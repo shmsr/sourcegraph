@@ -126,6 +126,7 @@ export class ConnectionNodes<C extends Connection<N>, N, NP = {}, HP = {}> exten
         }
 
         let summary: React.ReactFragment | undefined
+
         if (!this.props.noSummaryIfAllNodesVisible || this.props.connection.nodes.length === 0 || hasNextPage) {
             if (totalCount !== null && totalCount > 0) {
                 summary = TotalCountSummaryComponent ? (
@@ -190,13 +191,12 @@ export class ConnectionNodes<C extends Connection<N>, N, NP = {}, HP = {}> exten
                         {FootComponent && <FootComponent nodes={this.props.connection.nodes} />}
                     </ListComponent>
                 )}
-                {!this.props.connectionQuery && (
+                {!this.props.connectionQuery && !this.props.loading && hasNextPage && (
                     <ConnectionNodesSummary
                         summary={summary}
-                        displayShowMoreButton={!this.props.loading && !this.props.noShowMore && hasNextPage}
+                        displayShowMoreButton={!this.props.noShowMore}
                         showMoreClassName={this.props.showMoreClassName}
                         onShowMore={this.props.onShowMore}
-                        loading={this.props.loading}
                     />
                 )}
             </>
