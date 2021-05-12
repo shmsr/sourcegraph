@@ -196,6 +196,7 @@ export class ConnectionNodes<C extends Connection<N>, N, NP = {}, HP = {}> exten
                         displayShowMoreButton={!this.props.loading && !this.props.noShowMore && hasNextPage}
                         showMoreClassName={this.props.showMoreClassName}
                         onShowMore={this.props.onShowMore}
+                        loading={this.props.loading}
                     />
                 )}
             </>
